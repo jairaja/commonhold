@@ -1,0 +1,12 @@
+node_modules/
+.expo/
+.expo-shared/
+web-build/
+dist/
+*.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+.env
+.env.*
+!.env.example
