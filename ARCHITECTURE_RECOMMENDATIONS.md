@@ -76,3 +76,23 @@ Given the current stack, the best path is a **hybrid approach**:
 2. Add secure/non-secure persistence split (`expo-secure-store` + MMKV).
 3. Add testing baseline: unit (Jest/RNTL), then Playwright and Maestro smoke tests.
 4. Reassess Redux/MobX/GraphQL/tRPC only when backend/domain complexity demands it.
+
+## Library evaluation for a medium-sized Commonhold Property Management app
+
+| Library | Recommendation | Decision notes |
+|---|---|---|
+| `@expo/vector-icons` | Keep | Already in project; preferred Expo-compatible icon path. |
+| `react-native-paper` | Keep | Good MD3 component system for fast delivery of forms, lists, and admin workflows. |
+| `react-native-vector-icons` | Skip for now | `@expo/vector-icons` wraps and covers typical needs in Expo-managed apps; avoid duplicate icon dependency unless custom native icon setup is needed. |
+| `react-hook-form` | Add | Efficient and scalable form state for tenant/owner/maintenance flows. |
+| `zod` | Add | Schema-first validation for request payloads and forms. |
+| `@hookform/resolvers` | Add | Connects Zod schemas to React Hook Form cleanly. |
+| `expo-notifications` | Add | Required for reminders, announcements, and work-order updates. |
+| `expo-image-picker` | Add | Enables incident/report photo upload flows. |
+| `expo-file-system` | Add | Supports attachments/document caching and upload preparation. |
+| `expo-constants` | Keep | Already installed; useful for runtime config/build metadata. |
+| `expo-linking` | Add | Supports deep links for invite/payment/request links. |
+| `expo-updates` | Add | Enables OTA updates for quick release cycles. |
+
+This set keeps the stack practical for a medium-sized app while avoiding redundant dependencies.
+
