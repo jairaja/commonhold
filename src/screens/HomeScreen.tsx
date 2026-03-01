@@ -1,34 +1,38 @@
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Button, Card, Text } from 'react-native-paper';
 
-import { hasSupabaseCredentials } from '../lib/supabase';
+import { supabase } from '../lib/supabase';
 import { useAppStore } from '../store/useAppStore';
 
 export function HomeScreen() {
-  const isAuthenticated = useAppStore((state) => state.isAuthenticated);
-  const setAuthenticated = useAppStore((state) => state.setAuthenticated);
+  const user = useAppStore((state) => state.user);
+
+  const signOut = async () => {
+    if (!supabase) {
+      return;
+    }
+
+    await supabase.auth.signOut();
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <Text variant="headlineMedium">Commonhold</Text>
+        <Text variant="headlineMedium">Welcome to Commonhold</Text>
         <Text variant="bodyMedium" style={styles.subtitle}>
-          Expo + React Native + TypeScript + Zustand starter with Supabase.
+          You are signed in and ready to manage your portfolio.
         </Text>
 
-        <Card style={styles.card}>
-          <Card.Content>
-            <Text variant="titleMedium">Backend status</Text>
-            <Text variant="bodyMedium" style={styles.body}>
-              {hasSupabaseCredentials
-                ? 'Supabase keys detected. Ready to connect.'
-                : 'Add EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY to start using Supabase.'}
-            </Text>
+        <Card>
+          <Card.Content style={styles.cardContent}>
+            <Text variant="titleMedium">Profile</Text>
+            <Text variant="bodyMedium">Email: {user?.email ?? 'Unknown'}</Text>
+            <Text variant="bodySmall">User ID: {user?.id ?? 'Unknown'}</Text>
           </Card.Content>
         </Card>
 
-        <Button mode="contained" onPress={() => setAuthenticated(!isAuthenticated)}>
-          {isAuthenticated ? 'Sign out (demo state)' : 'Sign in (demo state)'}
+        <Button mode="contained-tonal" onPress={signOut}>
+          Sign out
         </Button>
       </View>
     </SafeAreaView>
@@ -48,10 +52,7 @@ const styles = StyleSheet.create({
   subtitle: {
     opacity: 0.75,
   },
-  card: {
-    marginVertical: 8,
-  },
-  body: {
-    marginTop: 8,
+  cardContent: {
+    gap: 8,
   },
 });

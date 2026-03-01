@@ -28,9 +28,19 @@ Expo + React Native + TypeScript starter configured with:
    npm run start
    ```
 
+## User management flow (Supabase Auth)
+
+The app follows the Expo + Supabase auth flow:
+
+- Restores the existing auth session on app launch.
+- Shows an email/password sign-in and sign-up screen when signed out.
+- Listens for auth state changes and routes users to the authenticated home screen.
+- Displays basic profile info for the active user and supports sign out.
+
 ## Environment variables
 
 - `EXPO_PUBLIC_SUPABASE_URL`
-- `EXPO_PUBLIC_SUPABASE_ANON_KEY`
+- `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+- `EXPO_PUBLIC_SUPABASE_ANON_KEY` (optional fallback for older setups)
 
-These are read from `process.env` and exposed at build time by Expo.
+The app prefers the publishable key and falls back to anon key for compatibility.
