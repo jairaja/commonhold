@@ -1,11 +1,18 @@
+import type { Session, User } from '@supabase/supabase-js';
 import { create } from 'zustand';
 
 type AppState = {
-  isAuthenticated: boolean;
-  setAuthenticated: (value: boolean) => void;
+  isLoadingSession: boolean;
+  session: Session | null;
+  user: User | null;
+  setSession: (session: Session | null) => void;
+  setIsLoadingSession: (value: boolean) => void;
 };
 
 export const useAppStore = create<AppState>((set) => ({
-  isAuthenticated: false,
-  setAuthenticated: (value) => set({ isAuthenticated: value }),
+  isLoadingSession: true,
+  session: null,
+  user: null,
+  setSession: (session) => set({ session, user: session?.user ?? null }),
+  setIsLoadingSession: (value) => set({ isLoadingSession: value }),
 }));
